@@ -1,10 +1,44 @@
-#define _CRT_SECURE_NO_WARNINGS
+#define _crt_secure_no_warnings
 #include<stdio.h>
 #include<stdlib.h>
 #include<conio.h>
-int height = 30, width = 30,x,y,fruitx,fruity,flag,gameend,score;
+#include<windows.h>
+#include<process.h>
+int height = 30, width = 100,x,y,fruitx,fruity,flag,gameend,score;
 int tailx[100], taily[100];
 int piece=0;
+void delay() {
+	for (int i = 0; i <= 1000000; i++)
+	{
+		printf("");
+	}
+}
+void setcurser(int i, int j) {
+	while (i) {
+		printf("\n");
+		i--;
+		if (!i)
+		{
+			while (j)
+			{
+				printf(" ");
+				j--;
+			}
+		}
+	}
+}
+void loading() {
+	int r;
+	setcurser(32, 36);
+	printf("\t\t\tl o a d i n g . . .\n");
+	printf("\t\t\t\t\t\t\t");
+	system("color 0c");
+	for (r = 0; r <= 20; r++) {
+		printf("%c", 177);
+		delay();
+	}
+	printf("\n\n\t\t\t\t\t\t");
+}
 void makelogic() {
 	int i;
 	int prevx, prevy, prev2x, prev2y;
@@ -47,7 +81,7 @@ void makelogic() {
 		if (fruitx == 0)
 			goto label3;
 	label4:
-		fruity = rand() % 30;
+		fruity = rand() % 100;
 		if (fruity == 0)
 			goto label4;
 		score = score + 10;
@@ -84,7 +118,7 @@ label1:
 	if (fruitx == 0)
 		goto label1;
 label2:
-	fruity = rand() % 30;
+	fruity = rand() % 100;
 	if (fruity == 0)
 		goto label2;
 	gameend = 0;
@@ -92,6 +126,7 @@ label2:
 }
 void draw() {
 	system("cls");
+	system("color 0a");
 	int i, j,k,ch;
 	for (i = 0; i <= height; i++){
 		printf("\t\t\t\t\t\t\t\t");
@@ -101,16 +136,16 @@ void draw() {
 			}
 			else {
 				if (i == x && j == y) {
-					printf("0");
+					printf("%c%c",3,3);
 				}
 				else if (i == fruitx && j == fruity) {
-					printf("0");
+					printf("%c%c",3,3);
 				}
 				else {
 					ch = 0;
 					for (k = 0; k < piece; k++) {
 						if (i == tailx[k] && j == taily[k]) {
-							printf("0");
+							printf("%c%c",3,3);
 							ch = 1;
 						}
 					}
@@ -122,9 +157,10 @@ void draw() {
 		printf("\n");
 
 	}
-	printf("Your score is\t %d", score);
+	printf("your score is\t %d", score);
 }
 int main() {
+	loading();
 	setup();
 	while (gameend != 1) {
 		input();
